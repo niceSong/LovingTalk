@@ -24,7 +24,7 @@ INCLUDES = -I/home/tyy/Loving_Talk/include/
 LIBS= -L/usr/lib64/mysql -lmysqlclient -lpthread -lz   
 AM_CXXFLAGS=-std=gnu++11   
    
---------------------------------------------不同语言描述（different language descriptions）----------------------------------------------
+-----------------------------------------不同语言描述（different language descriptions）-------------------------------------------
    
 This is the project I used to study and there is no commercial use.   
 A simple high-end concurrent server accessible to the external network.   
