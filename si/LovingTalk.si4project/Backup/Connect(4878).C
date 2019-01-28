@@ -51,7 +51,6 @@ void NSLink::T_Link::LTbind(unsigned short port)
 	if(-1 == temp_bind)
 	{
 		std::cout << "bind error!!!" << std::endl;
-		std::cout << strerror(errno) << std::endl;
 		exit(1);
 	}
 }
@@ -63,7 +62,6 @@ void NSLink::T_Link::LTlisten()
 	if(-1 == temp_listen)
 	{
 		std::cout << "listen error!!!" << std::endl;
-		std::cout << strerror(errno) << std::endl;
 		exit(1);
 	}
 }
@@ -80,7 +78,7 @@ void NSLink::T_Link::LTConnect(const char* ip,int port)
 	
 	
 	connect_temp = connect(socket_fd, (struct sockaddr *)&Tserveraddr, sizeof(struct sockaddr));
-	std::cout << "LTConnect socket_fd:" << socket_fd <<std::endl;
+	std::cout << "HB socket_fd:" << socket_fd <<std::endl;
 	if(-1 == connect_temp)
 	{
 		std::cout << "connect error!!!" << std::endl;
@@ -96,11 +94,12 @@ void NSLink::T_Link::LTaccept()
 	int len = sizeof(struct sockaddr);
 	
 	struct sockaddr_in Tclientaddr;
+	
 	accept_fd = accept(socket_fd, (struct sockaddr *)&Tclientaddr, (socklen_t *)&len);
 	if(-1 == accept_fd)
 	{
 		std::cout << "accept error!!!" << std::endl;
-		std::cout << strerror(errno) << std::endl;
+		exit(1);
 	}
 
 	//std::cout << "client ip:prot ls:" << inet_ntoa(Tclientaddr.sin_addr)<< ":" << ntohs(Tclientaddr.sin_port) << std::endl;
@@ -134,27 +133,13 @@ void NSLink::T_Link::LTrecv(int fd, char *buf, int len, int flags )
 }
 
 
-void NSLink::T_Link::LTHBsetsockopt()
+void NSLink::T_Link::LTsetsockopt()
 {
 	int temp;
 	temp = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEADDR, (char *)&flag, sizeof(flag));
 	if(-1 == temp)
 	{
 		std::cout << "setsockopt error!!!" << std::endl;
-		std::cout << strerror(errno) << std::endl;
-		exit(1);
-	}
-}
-
-
-void NSLink::T_Link::LTNETsetsockopt()
-{
-	int temp;
-	temp = setsockopt(socket_fd, SOL_SOCKET, SO_REUSEPORT, (char *)&flag, sizeof(flag));
-	if(-1 == temp)
-	{
-		std::cout << "setsockopt error!!!" << std::endl;
-		std::cout << strerror(errno) << std::endl;
 		exit(1);
 	}
 }
@@ -169,30 +154,6 @@ void NSLink::T_Link::LTSetnonblock(int fd)
 
 
 
-void NSLink::T_Link::LTshowRW(int fd)
-{
-	int val = fcntl(fd, F_GETFL);
- 
-    if (val == -1)
-	{
-		std::cout << "fcntl error for F_GETFL" << std::endl;
-        exit(1);
-    }
- 
-	std::cout << "read/write state:" ;
- 
-    switch (val & O_ACCMODE) {   /*单独取出文件读写状态值*/
-	    case O_RDONLY:
-			std::cout << "read only\n" << std::endl;
-	        break;
-	    case O_WRONLY:
-			std::cout << "write only\n" << std::endl;
-	        break;
-	    case O_RDWR:
-			std::cout << "read and write\n" << std::endl;
-	        break;   
-	}
-}
 
 
 /* expect free()... */

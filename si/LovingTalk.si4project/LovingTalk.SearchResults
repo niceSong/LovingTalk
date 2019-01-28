@@ -1,0 +1,3 @@
+---- netevents Matches (2 in 1 files) ----
+main in Main.C (src) : 	struct epoll_event netevents[2048];   //网络消息epoll
+main in Main.C (src) : 			NETReadyFdNum = epoll_wait(NET_epollfd, netevents, 20, 0);

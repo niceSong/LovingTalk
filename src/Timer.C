@@ -20,7 +20,7 @@ void TSendHBTimer::TimeOutFunc(NSLink::T_Link *link)
 {
 	time_t TCurrentTime = time(nullptr);
 	
-	if(TCurrentTime > expire)
+	if(TCurrentTime >= expire)
 	{
 		//·¢ËÍĞÄÌø
 		std::cout << "TCurrentTime : "<< (int)TCurrentTime << " expire : " << (int)expire << std::endl;
@@ -247,7 +247,7 @@ void T_HeapCtl::DealTimeOut(NSLink::T_Link *link)    //ÅĞ¶ÏÓĞÎŞ¶¨Ê±Æ÷³¬Ê±£¬²¢´¦À
 				break;
 			
 			//ÓĞ¶¨Ê±Æ÷³¬Ê±
-			std::cout << "expire is: " << TimerHeap[0]->expire << "cur_time is: " << cur_time << std::endl;
+			std::cout << "kill pid is: " << TimerHeap[0]->Pid << "expire is: " << TimerHeap[0]->expire << "cur_time is: " << cur_time << std::endl;
 			TimerHeap[0]->TimeOutFunc(link);
 			//É¾³ı¶¨Ê±Æ÷
 			delete TimerHeap[0];
